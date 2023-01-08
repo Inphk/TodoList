@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TodoList.Api.Models;
 using TodoList.Application.TodoLists.Commands.CreateTodoList;
 using TodoList.Application.TodoLists.Queries.GetSingleTodo;
 using TodoList.Application.TodoLists.Queries.GetTodos;
@@ -17,11 +18,9 @@ public class TodoListController : ControllerBase
         => _mediator = mediator;
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateTodoListCommand command)
+    public async Task<ApiResponse<Domain.Entities.TodoList>> Create([FromBody] CreateTodoListCommand command)
     {
-        var createdTodoList = await _mediator.Send(command);
-
-        return CreatedAtRoute("TodListById", new { id = createdTodoList.Id }, createdTodoList);
+        return ApiResponse<Domain.Entities.TodoList>.Success(await _mediator.Send(command));
     }
 
     [HttpGet]
