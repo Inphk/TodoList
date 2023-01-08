@@ -1,6 +1,7 @@
 using TodoList.Infrastructure.Log;
 using TodoList.Infrastructure;
 using TodoList.Application;
+using TodoList.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,12 @@ builder.Services.AddApplication();
 
 var app = builder.Build();
 
+#region app配置代码块
+// 配置全局异常处理中间件
+app.UseGlobalExceptionHandler();
+
+#endregion
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -41,10 +48,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-#region app配置代码块
 // 启动程序时，对数据库进行迁移，正式环境需注释掉
 app.MigrateDatabase();
-
-#endregion
 
 app.Run();
