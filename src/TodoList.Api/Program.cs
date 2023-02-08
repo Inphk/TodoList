@@ -2,6 +2,7 @@ using TodoList.Infrastructure.Log;
 using TodoList.Infrastructure;
 using TodoList.Application;
 using TodoList.Api.Extensions;
+using TodoList.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,9 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 // 添加应用层配置 (MediatR, AutoMapper, Validators)
 builder.Services.AddApplication();
+
+// 添加接口层配置 (Filter)
+builder.Services.AddScoped<LogFilterAttribute>();
 
 #endregion
 
