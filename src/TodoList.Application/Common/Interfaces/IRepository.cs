@@ -17,8 +17,8 @@ public interface IRepository<T> where T : class
     Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
     // 1. 查询基础操作接口
-    IQueryable<T> GetAsQueryable();
-    IQueryable<T> GetAsQueryable(ISpecification<T> spec);
+    IQueryable<T> GetAsQueryable(ISpecification<T>? spec = null);
+    IQueryable<T> GetAsQueryable(Expression<Func<T, bool>> condition);
 
     // 2. 查询数量相关接口
     int Count(ISpecification<T>? spec = null);

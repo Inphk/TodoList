@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Api.Models;
+using TodoList.Application.Common.Models;
 using TodoList.Application.TodoItems.Commands.CreateTodoItem;
 using TodoList.Application.TodoItems.Commands.UpdateTodoItem;
+using TodoList.Application.TodoItems.Queries.GetTodoItems;
 using TodoList.Domain.Entities;
 
 namespace TodoList.Api.Controllers;
@@ -31,9 +33,16 @@ public class TodoItemController : ControllerBase
     {
         if (id != command.Id)
         {
-            return ApiResponse<TodoItem>.Fail("Query id not match witch body");
+            return ApiResponse<TodoItem>.Fail("Query id not match with body");
         }
 
         return ApiResponse<TodoItem>.Success(await _mediator.Send(command));
+    }
+
+    // 对于查询来说，一般参数是来自查询字符串的，所以这里用[FromQuery]
+    [HttpGet]
+    public async Task<ApiResponse<PaginatedList<TodoItemDto>>> GetTodoItemsWithPagination([FromQuery] GetTodoItemsWithPaginationQuery query)
+    {
+        return ApiResponse<PaginatedList<TodoItemDto>>.Success(await _mediator.Send(query));
     }
 }

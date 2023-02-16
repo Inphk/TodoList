@@ -50,11 +50,11 @@ public class RepositoryBase<T> : IRepository<T> where T : class
     }
 
     // 1. 查询基础操作接口实现
-    public IQueryable<T> GetAsQueryable()
-        => _dbContext.Set<T>();
+    public IQueryable<T> GetAsQueryable(Expression<Func<T, bool>> condition)
+    => _dbContext.Set<T>().Where(condition);
 
-    public IQueryable<T> GetAsQueryable(ISpecification<T> spec)
-        => ApplySpecification(spec);
+    public IQueryable<T> GetAsQueryable(ISpecification<T>? spec = null)
+        => null != spec ? ApplySpecification(spec) : _dbContext.Set<T>();
 
     // 2. 查询数量相关接口实现
     public int Count(Expression<Func<T, bool>> condition)
