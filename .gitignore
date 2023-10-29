@@ -1,0 +1,10 @@
+src/TodoList.Api/bin
+src/TodoList.Api/obj
+src/TodoList.Api/logs
+src/TodoList.Application/bin
+src/TodoList.Application/obj
+src/TodoList.Domain/bin
+src/TodoList.Domain/obj
+src/TodoList.Infrastructure/bin
+src/TodoList.Infrastructure/obj
+src/TodoList.Infrastructure/Migrations
